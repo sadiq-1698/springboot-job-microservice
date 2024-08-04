@@ -3,10 +3,12 @@ package com.sadiq1698.jobappmicroservice.job.impl;
 import com.sadiq1698.jobappmicroservice.job.Job;
 import com.sadiq1698.jobappmicroservice.job.JobRepository;
 import com.sadiq1698.jobappmicroservice.job.JobService;
+import com.sadiq1698.jobappmicroservice.job.dto.JobWithCompanyDTO;
 import com.sadiq1698.jobappmicroservice.job.external.Company;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,10 +22,21 @@ public class JobServiceImpl implements JobService {
     }
 
     @Override
-    public List<Job> findAll() {
+    public List<JobWithCompanyDTO> findAll() {
+        List<Job> jobs = jobRepository.findAll();
+        List <JobWithCompanyDTO> jobsWithCompanyDTO = new ArrayList();
+
         RestTemplate restTemplate = new RestTemplate();
-        Company company = restTemplate.getForObject("http://localhost:8082/company/1", Company.class);
-        return jobRepository.findAll();
+        for(Job job: jobs) {
+            JobWithCompanyDTO jobWithCompanyDTO = new JobWithCompanyDTO();
+            jobWithCompanyDTO.setJob(job);
+
+            Company company = restTemplate.getForObject("http://localhost:8082/company/" + job.getCompanyId(), Company.class);
+            jobWithCompanyDTO.setCompany(company);
+
+            jobsWithCompanyDTO.add(jobWithCompanyDTO);
+        }
+        return jobsWithCompanyDTO;
     }
 
     @Override
