@@ -6,7 +6,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.ArrayList;
 
 @RestController
 @RequestMapping("/job")
@@ -32,9 +31,9 @@ public class JobController {
 
     //  Get a job by ID
     @GetMapping("/{id}")
-    public ResponseEntity<Job> findAJob(@PathVariable Long id) {
-        Job job = jobService.getJobyId(id);
-        if(job != null) return new ResponseEntity<>(job, HttpStatus.OK);
+    public ResponseEntity<JobWithCompanyDTO> findAJob(@PathVariable Long id) {
+        JobWithCompanyDTO jobWithCompanyDTO = jobService.getJobyId(id);
+        if(jobWithCompanyDTO != null) return new ResponseEntity<>(jobWithCompanyDTO, HttpStatus.OK);
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 

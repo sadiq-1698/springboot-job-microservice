@@ -9,5 +9,5 @@ public interface JobService {
    void createJob(Job job);
    boolean deleteJob(Long id);
    boolean updateJob(Long id, Job job);
-   Job getJobyId(Long id);
+   JobWithCompanyDTO getJobyId(Long id);
 }
