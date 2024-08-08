@@ -1,13 +1,13 @@
 package com.sadiq1698.jobappmicroservice.job;
 
-import com.sadiq1698.jobappmicroservice.job.dto.JobWithCompanyDTO;
+import com.sadiq1698.jobappmicroservice.job.dto.JobDTO;
 
 import java.util.List;
 
 public interface JobService {
-   List<JobWithCompanyDTO> findAll();
+   List<JobDTO> findAll();
    void createJob(Job job);
    boolean deleteJob(Long id);
    boolean updateJob(Long id, Job job);
-   JobWithCompanyDTO getJobyId(Long id);
+   JobDTO getJobyId(Long id);
 }
